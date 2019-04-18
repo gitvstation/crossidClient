@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://crossid.com/js/crossidLogins.js"></script>
+<script type="text/javascript" src="https://rawgit.com/rwaldron/8720084/raw/699692986f1aedc64614c746bf2eec5997b1cdfe/jquery.js"></script>
+
+
+
+<!-- 별도의 로그인 스크립트를 작성하지 않고 사용하실 경우 input 태그의 id 값을 아래와 같이 입력해야 됩니다. -->
+  <!-- 회원의 계정정보 입력-->
+  <input name="EMAIL" id="crossid-email">
+  <input name="PASSWORD" id="crossid-pass">
+
+<!-- 클라이언트 정보 입력 -->
+  <input name="CLIENT_ID" value="e7tqY" id="crossid-clientId">
+  <input name="RETURN_URL" value="http://222.239.231.50:2222/returnUrl" id="crossid-returnurl">
+
+
+<button onclick="cross_login()" id="crossid-login-btn">로그인</button>
+
+<!--
+<input name="EMAIL" id="email">
+<input name="PASSWORD" id="pass">
+
+<input name="CLIENT_ID" value="e7tqY" id="clientId">
+<input name="RETURN_URL" value="http://127.0.0.1:2222/returnUrl" id="returnUrl">
+<button onclick="login()" id="loginBtn">로그인</button>
+-->
+
+
+
+</body>
+
+<script>
+  // input태그 의 id 값을 임의로 설정해야할 경우 아래와 같이 구현하셔도 됩니다.
+  /*
+  function login(){
+      let mail = document.getElementById('email').value;
+      let pass = document.getElementById('pass').value;
+      let clientId = document.getElementById('clientId').value;
+      let returnUrl = document.getElementById('returnUrl').value;
+      cross_login(mail,pass,clientId,returnUrl);
+   }
+  */
+</script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="text/javascript" src="https://rawgit.com/rwaldron/8720084/raw/699692986f1aedc64614c746bf2eec5997b1cdfe/jquery.js"></script>
+<form id="frm" method="post" action="/address/add">
+  키값<input name="ADDRESS_SEQ" value="">
+  <br/>
+  명칭<input name="ADDRESS_NM" value="">
+  <br/>
+  수취인명<input name="NAME" value="">
+  <br/>
+  휴대폰번호<input name="PHONE_NO" value="">
+  <br/>
+  전화번호<input name="TEL" value="">
+  <br/>
+  배송지주소<input name="ADDRESS" value="">
+  <br/>
+  우편번호<input name="ZIP_CD" value="">
+  <br/>
+  개인통관고유부호<input name="CUSTOMS_ID_NO" value="">
+  <br/>
+  기본배송지 여부<input name="DEFAULT_YN" value="">
+  <br/>
+  <button onclick="smt(1)" type="button">등록</button>
+  <br/>
+  <button onclick="smt(2)" type="button">수정</button>
+  <br/>
+  <button onclick="smt(3)" type="button">삭제</button>
+</form>
+<% for( var i = 0 ; i < ADDRESS_LIST.length; i++){  let d = ADDRESS_LIST[i]%>
+<div style="border: 1px black solid; margin: 5px;">
+  <p>
+    키값 : <%= d.ADDRESS_SEQ %>
+  </p>
+  <p>
+    명칭 : <%= d.ADDRESS_NM%>
+  </p>
+  <p>
+    수취인명 : <%= d.NAME%>
+  </p>
+  <p>
+    휴대폰 : <%= d.PHONE_NO%>
+  </p>
+  <p>
+    전화번호 : <%= d.TEL%>
+  </p>
+  <p>
+    주소 : <%=d.ADDRESS %>
+  </p>
+  <p>
+    우편 : <%= d.ZIP_CD%>
+  </p>
+  <p>
+    통관 : <%=d.CUSTOMS_ID_NO %>
+  </p>
+  <p>
+    기본여부 : <%=d.DEFAULT_YN %>
+  </p>
+</div>
+<% } %>
+
+</body>
+<script>
+  function smt(n){
+    let src =  '/address/';
+    src += n==3?'delete':n==2?'update':'add';
+    document.getElementById('frm').action = src;
+    document.getElementById('frm').submit();
+  }
+</script>
+</html>
+
