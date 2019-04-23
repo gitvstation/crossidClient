@@ -28,6 +28,12 @@ router.get('/tokenrefresh', function (req, res, next) {
     })()
 });
 
+//// 회원사 개발 API - 주문정보 반환
+router.get('/crossid/order', returnOrder);
+
+
+
+
 async function returnUrl(req,res,next){
     /// 설정한 RETURN URL 에 회원의 엑세스토큰과 리플레시 토큰 이 전달됩니다.
         let data = req.body;
@@ -134,5 +140,68 @@ async function address_delete(req,res,next){
     }
     res.render('address',req.session.user);
 }
+
+async function returnOrder(req,res,next) {
+    let data =req.query;
+    /// 주문정보 반환해도 되는지 확인
+    if(data.CLIENT_ID =='a' && data.CLIENT_SECRET =='b'){
+        /// 주문건 검색 ( select * from ORDER where USER_SEQ in (?) )
+        let returnList = [];
+        for(var i = 0 ; i < orderList.length; i++){
+            for(var k = 0 ; k < data.USER_SEQ.length; k++){
+                if(data[k].USER_SEQ == orderList[i].USER_SEQ ){
+                    returnList.push(orderList[i]);
+                    break;
+                }
+            }
+        }
+        res.send(returnList);
+    }
+}
+
+let orderList =
+    //// 주문정보 예제
+    [
+        {
+            ORDER_NO : '1',
+            SHIP_STAT : '2',
+            ITEM_NM : '노트북 외 1건',
+            CROSS_USER_SEQ : '1',
+            //...//
+            ITEM : [
+                {
+                    //..//
+                    INVOICE_NO: '',
+                    INVOICE_NO2 : 'PJP0123..',
+                    ITEM_ORDER_NO : '123',
+                    SHIP_STAT : '1'
+                },
+                {
+                    //..//
+                    INVOICE_NO: '',
+                    INVOICE_NO2 : 'PJP0123..',
+                    ITEM_ORDER_NO : '124',
+                    SHIP_STAT : '1'
+                }
+            ]
+        },
+        {
+            ORDER_NO : '2',
+            SHIP_STAT : '2',
+            ITEM_NM : 'TV',
+            CROSS_USER_SEQ : '2',
+            //...//
+            ITEM : [
+                {
+                    //..//
+                    INVOICE_NO: '',
+                    INVOICE_NO2 : 'PJP0123..',
+                    ITEM_ORDER_NO : '123',
+                    SHIP_STAT : '1'
+                }
+            ]
+        }
+
+]
 
 module.exports = router;
