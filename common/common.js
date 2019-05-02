@@ -46,6 +46,7 @@
             request({
                 url : url,
                 strictSSL: false,
+                method : method,
                 json:data
             },function(e,a,b){
                 /// 기존 request.js 처럼 콜백함수를 이용하여 처리할 수 있도록 하기위함
