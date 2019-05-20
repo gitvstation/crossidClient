@@ -4,13 +4,10 @@ const request = require('request');
 const common = require('../common/common');
 const serialize = require('php-serialize');
 
-
-
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('index', {title: 'Express'});
 });
-
 
 router.post('/returnUrl', returnUrl);
 router.get('/getUserInfo', getUserInfo);
@@ -22,11 +19,16 @@ router.post('/address/add', address_add);
 router.post('/address/update', address_update);
 router.post('/address/delete', address_delete);
 
+router.get('/join', join);
+
+
 router.get('/tokenrefresh', function (req, res, next) {
     (async function () {
         await common.token_refresh();
     })()
 });
+
+
 
 //// 회원사 개발 API - 주문정보 반환
 router.get('/crossid/order', returnOrder);
@@ -64,6 +66,23 @@ async function getUserInfo(req,res,next){
 
 async function usePoint_view(req,res,next){
     res.render('point',req.session.user);
+}
+
+async function join(req,res,next){
+    /// 회원사 x 크로스아이디 동시 회원가입시 사용
+    let data ={};
+    data.CLIENT_ID = common.clientId;
+    data.CLIENT_SECRET = common.clientSec;
+
+    data.returnUrl = '';/// 크로스아이디 회원가입  프로세스 완료 후 리턴 받을 URL ( 이메일 인증 후 해당 url로 정보 리턴 )
+    request({
+        url : 'https://crossid.com/login/join',
+        strictSSL: false,
+        method : 'POST',
+        json:data
+    },function(e,a,b){
+        res.send(b); // 호출한 데이터 바로 보여줌
+    });
 }
 
 async function usePoint(req,res,next){
@@ -119,7 +138,9 @@ async function address_update(req,res,next){
     }
     else{
         /// 실패시
-
+        await common.token_refresh();
+        req.reYn = 1;
+        if(!req.reYn)address_update(req,res,next);
     }
     res.render('address',req.session.user);
 }

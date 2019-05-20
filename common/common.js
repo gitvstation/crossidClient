@@ -7,14 +7,14 @@
     let common = {};
     common.clientId = 'e7tqY';
     common.clientSec = 'zceq15-_e';
-    common.myurl = "http://222.239.231.50:2222";
+    common.myurl = "http://127.0.0.1:2222";
     common.crossUrl = "https://crossid.com";
 
     common.token_refresh = async function(req){
         /*
         /// request.js 를 사용하여 호출할 경우 예제 입니다.
         return new Promise(function (resolve, reject) {
-            request.get('http://127.0.0.1:3001/login/tokenrefresh',
+            request.get('https://crossid.com/login/tokenrefresh',
                 {json:{
                         REFRESH_TOKEN : req.session.REFRESH_TOKEN,
                         CLIENT_ID : common.clientId,
