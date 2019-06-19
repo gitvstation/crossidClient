@@ -1,3 +1,5 @@
+### 서버 주소 : https://crossid.com
+
 # CROSSid API
 
 ## 1	회원 정보 조회	
