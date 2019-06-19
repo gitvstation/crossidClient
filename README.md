@@ -52,7 +52,9 @@ ADDRESS_LIST: [
 CLIENT_ID :   클라이언트 아이디, 
 CLIENT_SECRET :  시크릿코드, 
 REFRESH_TOKEN :  리플레시 토큰
- }"	"(JSON)
+ }
+ ```
+ ```
  { 
  ACCESS_TOKEN : 재발급된 엑세스토큰, 
  REFRESH_TOKEN : 리플레시 토큰 
@@ -71,7 +73,7 @@ REFRESH_TOKEN :  리플레시 토큰
 *ACCESS_TOKEN :  회원의 엑세스토큰, 
 *POINT : 사용될 포인트, 
 INFO : 포인트 사용건에 대한 내용 (
- 미입력시 "" 회원사명 - 포인트사용[사용된포인트] "" 로 입력됩니다.
+ 미입력시 " 회원사명 - 포인트사용[사용된포인트] " 로 입력됩니다.
  )
 }
 ```
