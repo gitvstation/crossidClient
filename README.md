@@ -247,3 +247,104 @@ WEIGHT : 무게,
  ### [514]
  * 필수값이 누락되었습니다. ({컬럼명})	
  > 필수로 입력되어야 하는 값이 입력되지 않았을경우.
+ 
+ 
+ # 로그인 예제
+ * 로그인 (엑세스 토큰 발급)
+ > 입력한 returnUrl 로 엑세스토큰이 전달됩니다.
+ ```
+ <!DOCTYPE html>
+ <html>
+ <body>
+ <script src="https://crossid.com/js/crossidLogins.js"></script>
+ <script type="text/javascript" src="https://rawgit.com/rwaldron/8720084/raw/699692986f1aedc64614c746bf2eec5997b1cdfe/jquery.js"></script>
+ 
+ 
+ 
+ <!-- 별도의 로그인 스크립트를 작성하지 않고 사용하실 경우 input 태그의 id 값을 아래와 같이 입력해야 됩니다. -->
+   <!-- 회원의 계정정보 입력-->
+   <input name="EMAIL" id="crossid-email">
+   <input name="PASSWORD" id="crossid-pass">
+ 
+ <!-- 클라이언트 정보 입력 -->
+   <input name="CLIENT_ID" value="e7tqY" id="crossid-clientId">
+   <input name="RETURN_URL" value="http://222.239.231.50:2222/returnUrl" id="crossid-returnurl">
+ 
+ 
+ <button onclick="cross_login()" id="crossid-login-btn">로그인</button>
+ 
+ <!--
+ <input name="EMAIL" id="email">
+ <input name="PASSWORD" id="pass">
+ 
+ <input name="CLIENT_ID" value="e7tqY" id="clientId">
+ <input name="RETURN_URL" value="http://127.0.0.1:2222/returnUrl" id="returnUrl">
+ <button onclick="login()" id="loginBtn">로그인</button>
+ -->
+ 
+ 
+ 
+ </body>
+ 
+ <script>
+   // input태그 의 id 값을 임의로 설정해야할 경우 아래와 같이 구현하셔도 됩니다.
+   /*
+   function login(){
+       let mail = document.getElementById('email').value;
+       let pass = document.getElementById('pass').value;
+       let clientId = document.getElementById('clientId').value;
+       let returnUrl = document.getElementById('returnUrl').value;
+       cross_login(mail,pass,clientId,returnUrl);
+    }
+   */
+ </script>
+ </html>
+ ```
+ 
+ * returnUrl 예
+ > 전달받은 엑세스토큰을 사용해 해당 회원의 정보를 호출합니다.
+ ```
+ //  domain.com/returnUrl [ POST ] 
+ 
+ router.post('/returnUrl',function (req,res,next) {
+   (async function() {
+     let data = req.body;
+     let user = await new Promise(function (resolve,reject) {
+       request.get('https://crossid.com/oauth/user/info?ACCESS_TOKEN=' + data.ACCESS_TOKEN + '&CLIENT_ID=' + clientId + '&CLIENT_SECRET=' + clientSec, {}, function (err, html, body) {
+         return resolve(JSON.parse(body));
+       });
+     });
+     res.send(user); 
+ /* 
+  data = {
+   ACCESS_TOKEN : "sadgsad...", // 회원의 정보에 접근할 때 필요한 토큰입니다.  짧은 유효기간을 가지고 있어 유효기간 만료시 재발급 요청을 해주어야 합니다.
+  REFRESH_TOKEN : "fafsQ2...", // 엑세스토큰 만료후 재발급시 사용되는 토큰입니다. 
+  엑세스 토큰 요청시 갱신되며, 갱신후에는 갱신된 토큰을 사용해야 합니다.
+ }
+ 
+  user =  { 
+  ADDRESS : "서울특별시 영등포구... * 1006호 ", ( 기본. 주소와 상세주소 사이에 구분자로 * 이 들어갑니다. ) // 회원 주소
+ ZIP_CODE : "12312", // 우편번호
+  ADDRESS_LIST : [ {  
+  CUSTOMS_ID_NO : 'P190012344321',  /// 수취인 개인통관고유부호 
+  ADDRESS : "서울특별시.... ", // 수취인 주소 
+ ZIP_CD : "07299", // 우편번호 
+  ADDRESS_NM : " 회사 ", // 배송지 명칭 
+  ADDRESS_SEQ : 1, // 배송지 키값 
+  DEFAULT_YN : 1, // 기본배송지 여부 ( 0 = x , 1 = o ) 
+  NAME : "김길동", // 수취인명 
+  PHONE_NO : "010-1234-4321", // 수취인 휴대폰번호 
+  TEL : "02-1234-4321" // 수취인 전화번호 
+  } , {...}, {...} ], // 회원의 배송지주소록  
+ BIRTH : "2000-01-01", // 회원 생년월일, 
+ CUSTOMS_DE_NO : "P180012344321", // 개인통관고유부호 
+ EMAIL : "hong@cubeplatform.co.kr", // 이메일주소(아이디) 
+ PHONE_NO : "010-9876-5432", // 회원 휴대폰번호 
+ POINT : 30000, // 회원의 잔여포인트 
+ SEX : "M", // 성별 
+ USER_NM : "홍길동", // 회원명
+ USER_SEQ : "1" // 회원 키값 
+ */
+   })();
+ });
+ ```
