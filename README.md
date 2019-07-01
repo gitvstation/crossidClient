@@ -195,7 +195,7 @@ ITEM_INFO : 상품 설명,
 * CURRENCY : 통화(
  원화 : KRW, 엔화 : JPY  ( 일본 구매대행인 경우 JPY 입력 )
 ),
-* COUNTRY : 상품 국가,
+* COUNTRY : 상품 국가, // ( 대,소문자 구분 없이 iso3166-2  )
 WEIGHT : 무게,
 * EA : 수량
 } , { … }
