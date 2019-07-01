@@ -169,7 +169,7 @@ DEFAULT_YN : 기본배송지 여부 (기본배송지 일경우 1, 아닐경우 0
 * RECIEVER_NM : 수취인명,
 * RECIEVER_ADDRESS : 수취인 주소,
 * RECIEVER_ADD_ZIP_CODE : 수취인 우편번호,
-* RECIEVER_CUSTOMS_NO : 개인통관고유부호,
+RECIEVER_CUSTOMS_NO : 개인통관고유부호,
 * RECIEVER_PHONE_NO : 수취인 휴대폰번호,
 SHIP_MEMO : 배송메모,
 * ITEM_SUM_PRICE : 상품 전체 가격,
